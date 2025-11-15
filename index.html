@@ -1,591 +1,290 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="hi">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ARKHA GROUP BRANCHES</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background: #222;
-            padding: 20px;
-            text-align: center;
-            color: #fff;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .container {
-            width: 95%;
-            margin: auto;
-            padding: 20px 0;
-        }
-        .branch {
-            background: #fff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .branch h2 {
-            margin: 0;
-            font-size: 24px;
-            color: #222;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        table, th, td {
-            border: 1px solid #ccc;
-        }
-        th, td {
-            padding: 10px;
-            text-align: center;
-            font-size: 16px;
-        }
-        th {
-            background: #333;
-            color: #fff;
-        }
-        .footer {
-            text-align: center;
-            padding: 15px;
-            background: #222;
-            color: white;
-            margin-top: 20px;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ARKHA GROUP — Daily Branch Reports</title>
+  <style>
+    :root{--bg:#f7f7fb;--card:#ffffff;--muted:#6b7280;--accent:#0f766e}
+    body{font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);margin:0;color:#0f172a}
+    header{background:linear-gradient(90deg,#064e3b,#0f766e);color:#fff;padding:16px 20px}
+    .wrap{max-width:1100px;margin:18px auto;padding:0 16px}
+    .top{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    h1{margin:0;font-size:20px}
+    .controls{margin-left:auto;display:flex;gap:8px;align-items:center}
+    select,input,button{padding:8px 10px;border-radius:8px;border:1px solid #e6e9ef;background:#fff}
+    button{cursor:pointer}
+    .card{background:var(--card);border-radius:10px;padding:14px;margin-top:14px;box-shadow:0 6px 18px rgba(15,23,42,0.06)}
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    th,td{padding:8px 10px;border:1px solid #eef2f7;text-align:center}
+    th{background:#f3f4f6;color:#0f172a;font-weight:600}
+    td[contenteditable]{background:#fff}
+    .row-actions{display:flex;gap:6px;justify-content:center}
+    .muted{color:var(--muted);font-size:13px}
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .small{padding:6px 8px;font-size:13px}
+    @media (max-width:900px){.top{flex-direction:column;align-items:flex-start}.controls{margin-left:0}}
+  </style>
 </head>
 <body>
-    <header>ARKHA GROUP - DAILY BUSINESS PANEL</header>
+  <header>
+    <div class="wrap top">
+      <div>
+        <h1>ARKHA GROUP — Daily Branch Reports</h1>
+        <div class="muted">Owner: ABHAY PRATAP SINGH — Site Developer: DIVAS DUBEY</div>
+      </div>
 
-    <div class="container">
+      <div class="controls">
+        <label class="muted">Branch</label>
+        <select id="branchSelect">
+          <option value="arkha_fuels">ARKHA FUELS</option>
+          <option value="arkha_farm_foods">ARKHA FARM FOODS</option>
+          <option value="arkha_hp_gas">ARKHA HP GAS</option>
+          <option value="unimart">UNIMART</option>
+          <option value="arkha_infra">ARKHA INFRASTRUCTURE PVT LTD</option>
+        </select>
 
-        <!-- Branch 1 -->
-        <div class="branch">
-            <h2>ARKHA FUELS</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Total Sale</th>
-                    <th>Total Purchase</th>
-                    <th>Expenses</th>
-                    <th>Net Profit</th>
-                </tr>
-                <tr>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-            </table>
+        <label class="muted">Date</label>
+        <input type="date" id="reportDate">
+
+        <div class="toolbar">
+          <button id="addRow" class="small">+ Add Row</button>
+          <button id="saveBtn" class="small">Save</button>
+          <button id="loadBtn" class="small">Load</button>
+          <button id="exportBtn" class="small">Export CSV</button>
+          <button id="importBtn" class="small">Import CSV</button>
+          <input id="fileInput" type="file" accept="text/csv" style="display:none">
         </div>
+      </div>
+    </div>
+  </header>
 
-        <!-- Branch 2 -->
-        <div class="branch">
-            <h2>ARKHA FARM FOODS</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Total Sale</th>
-                    <th>Total Purchase</th>
-                    <th>Expenses</th>
-                    <th>Net Profit</th>
-                </tr>
-                <tr>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-            </table>
+  <main class="wrap">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div>
+          <strong>Instructions:</strong>
+          <span class="muted">Add daily rows, edit cells (all cells editable except the header). Net Profit auto-calculates as Sale − Purchase − Expenses.</span>
         </div>
+        <div class="muted">Data saved in your browser (localStorage) — you can export CSV for backup.</div>
+      </div>
 
-        <!-- Branch 3 -->
-        <div class="branch">
-            <h2>ARKHA HP GAS</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Total Sale</th>
-                    <th>Total Purchase</th>
-                    <th>Expenses</th>
-                    <th>Net Profit</th>
-                </tr>
-                <tr>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Branch 4 -->
-        <div class="branch">
-            <h2>UNIMART</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Total Sale</th>
-                    <th>Total Purchase</th>
-                    <th>Expenses</th>
-                    <th>Net Profit</th>
-                </tr>
-                <tr>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Branch 5 -->
-        <div class="branch">
-            <h2>ARKHA INFRASTRUCTURE PVT LTD</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Total Sale</th>
-                    <th>Total Purchase</th>
-                    <th>Expenses</th>
-                    <th>Net Profit</th>
-                </tr>
-                <tr>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-            </table>
-        </div>
+      <div style="overflow:auto;margin-top:12px">
+        <table id="reportTable">
+          <thead>
+            <tr>
+              <th style="min-width:110px">Date</th>
+              <th style="min-width:220px">Description</th>
+              <th>Total Sale (₹)</th>
+              <th>Total Purchase (₹)</th>
+              <th>Expenses (₹)</th>
+              <th>Net Profit (₹)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <!-- rows inserted dynamically -->
+          </tbody>
+          <tfoot>
+            <tr>
+              <th colspan="2">Daily Totals</th>
+              <th id="sumSale">0</th>
+              <th id="sumPurchase">0</th>
+              <th id="sumExp">0</th>
+              <th id="sumNet">0</th>
+              <th></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
 
     </div>
+  </main>
 
-    <div class="footer">Website Developed By DIVAS DUBEY</div>
+  <script>
+    // Simple branches list and localStorage key helper
+    const branches = {
+      arkha_fuels: 'ARKHA FUELS',
+      arkha_farm_foods: 'ARKHA FARM FOODS',
+      arkha_hp_gas: 'ARKHA HP GAS',
+      unimart: 'UNIMART',
+      arkha_infra: 'ARKHA INFRASTRUCTURE PVT LTD'
+    }
 
+    const branchSelect = document.getElementById('branchSelect');
+    const tbody = document.getElementById('tbody');
+    const reportDate = document.getElementById('reportDate');
+    const addRowBtn = document.getElementById('addRow');
+    const saveBtn = document.getElementById('saveBtn');
+    const loadBtn = document.getElementById('loadBtn');
+    const exportBtn = document.getElementById('exportBtn');
+    const importBtn = document.getElementById('importBtn');
+    const fileInput = document.getElementById('fileInput');
+
+    // initialize date to today
+    reportDate.value = new Date().toISOString().slice(0,10);
+
+    // helper to build storage key per branch
+    function storageKey(branch){return 'arkha_reports_'+branch}
+
+    // create empty row and append
+    function createRow(data){
+      const tr = document.createElement('tr');
+      // Date cell (editable)
+      const tdDate = document.createElement('td');
+      tdDate.contentEditable = true;
+      tdDate.innerText = data.date || reportDate.value || '';
+      tdDate.style.minWidth = '110px';
+
+      // Description
+      const tdDesc = document.createElement('td');
+      tdDesc.contentEditable = true;
+      tdDesc.innerText = data.desc || '';
+
+      // Sale
+      const tdSale = document.createElement('td');
+      tdSale.contentEditable = true;
+      tdSale.innerText = data.sale != null ? data.sale : '';
+      tdSale.addEventListener('input', ()=>recalcRow(tr));
+
+      // Purchase
+      const tdPurchase = document.createElement('td');
+      tdPurchase.contentEditable = true;
+      tdPurchase.innerText = data.purchase != null ? data.purchase : '';
+      tdPurchase.addEventListener('input', ()=>recalcRow(tr));
+
+      // Expenses
+      const tdExp = document.createElement('td');
+      tdExp.contentEditable = true;
+      tdExp.innerText = data.exp != null ? data.exp : '';
+      tdExp.addEventListener('input', ()=>recalcRow(tr));
+
+      // Net Profit (read only cell)
+      const tdNet = document.createElement('td');
+      tdNet.innerText = '0';
+      tdNet.style.fontWeight = '600';
+
+      // Actions
+      const tdActions = document.createElement('td');
+      tdActions.className = 'row-actions';
+      const delBtn = document.createElement('button'); delBtn.className='small'; delBtn.innerText='Delete';
+      delBtn.addEventListener('click', ()=>{ tr.remove(); recalcTotals(); });
+      tdActions.appendChild(delBtn);
+
+      tr.append(tdDate, tdDesc, tdSale, tdPurchase, tdExp, tdNet, tdActions);
+      tbody.appendChild(tr);
+      recalcRow(tr);
+      return tr;
+    }
+
+    function recalcRow(tr){
+      const cells = tr.querySelectorAll('td');
+      const sale = parseFloat(cells[2].innerText.replace(/[^0-9.-]/g,'')) || 0;
+      const purchase = parseFloat(cells[3].innerText.replace(/[^0-9.-]/g,'')) || 0;
+      const exp = parseFloat(cells[4].innerText.replace(/[^0-9.-]/g,'')) || 0;
+      const net = +(sale - purchase - exp).toFixed(2);
+      cells[5].innerText = net;
+      recalcTotals();
+    }
+
+    function recalcTotals(){
+      let sumSale=0, sumPurchase=0, sumExp=0, sumNet=0;
+      tbody.querySelectorAll('tr').forEach(tr=>{
+        const cells = tr.querySelectorAll('td');
+        sumSale += parseFloat(cells[2].innerText.replace(/[^0-9.-]/g,'')) || 0;
+        sumPurchase += parseFloat(cells[3].innerText.replace(/[^0-9.-]/g,'')) || 0;
+        sumExp += parseFloat(cells[4].innerText.replace(/[^0-9.-]/g,'')) || 0;
+        sumNet += parseFloat(cells[5].innerText.replace(/[^0-9.-]/g,'')) || 0;
+      });
+      document.getElementById('sumSale').innerText = sumSale.toFixed(2);
+      document.getElementById('sumPurchase').innerText = sumPurchase.toFixed(2);
+      document.getElementById('sumExp').innerText = sumExp.toFixed(2);
+      document.getElementById('sumNet').innerText = sumNet.toFixed(2);
+    }
+
+    // clear table body
+    function clearRows(){ tbody.innerHTML = ''; recalcTotals(); }
+
+    // save current table to localStorage under branch key
+    function saveBranch(){
+      const branch = branchSelect.value;
+      const rows = [];
+      tbody.querySelectorAll('tr').forEach(tr=>{
+        const cells = tr.querySelectorAll('td');
+        rows.push({date:cells[0].innerText, desc:cells[1].innerText,
+          sale:cells[2].innerText, purchase:cells[3].innerText, exp:cells[4].innerText, net:cells[5].innerText});
+      });
+      localStorage.setItem(storageKey(branch), JSON.stringify({savedAt:new Date().toISOString(),rows}));
+      alert('Saved locally for '+branches[branch]);
+    }
+
+    // load branch data
+    function loadBranch(){
+      const branch = branchSelect.value;
+      const raw = localStorage.getItem(storageKey(branch));
+      clearRows();
+      if(!raw) return;
+      try{
+        const payload = JSON.parse(raw);
+        if(payload.rows && payload.rows.length){
+          payload.rows.forEach(r=>createRow(r));
+        }
+      }catch(e){console.error(e)}
+    }
+
+    // export current branch table to CSV
+    function exportCSV(){
+      const branch = branchSelect.value;
+      const rows = [];
+      // header
+      rows.push(['Date','Description','Total Sale','Total Purchase','Expenses','Net Profit']);
+      tbody.querySelectorAll('tr').forEach(tr=>{
+        const cells = tr.querySelectorAll('td');
+        rows.push([cells[0].innerText,cells[1].innerText,cells[2].innerText,cells[3].innerText,cells[4].innerText,cells[5].innerText]);
+      });
+      const csv = rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv],{type:'text/csv'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = branch + '_report_'+(new Date().toISOString().slice(0,10)) + '.csv';
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    }
+
+    // import CSV (simple) - replaces table
+    function importCSV(file){
+      const reader = new FileReader();
+      reader.onload = e=>{
+        const text = e.target.result;
+        const lines = text.split(/\r?\n/).filter(Boolean);
+        clearRows();
+        for(let i=1;i<lines.length;i++){
+          const cols = lines[i].split(',').map(c=>c.replace(/^"|"$/g,''));
+          createRow({date:cols[0],desc:cols[1],sale:cols[2],purchase:cols[3],exp:cols[4]});
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // add demo row
+    addRowBtn.addEventListener('click',()=>createRow({date:reportDate.value,desc:'',sale:'',purchase:'',exp:''}));
+
+    // save/load/export/import handlers
+    saveBtn.addEventListener('click',saveBranch);
+    loadBtn.addEventListener('click',loadBranch);
+    exportBtn.addEventListener('click',exportCSV);
+    importBtn.addEventListener('click',()=>fileInput.click());
+    fileInput.addEventListener('change',e=>{ if(e.target.files.length) importCSV(e.target.files[0]); e.target.value=''; });
+
+    // switch branch -> load
+    branchSelect.addEventListener('change',loadBranch);
+
+    // initialize with one empty row
+    createRow({date:reportDate.value,desc:'',sale:'',purchase:'',exp:''});
+
+    // auto-load currently selected branch if saved
+    window.addEventListener('load', ()=>{
+      loadBranch();
+      recalcTotals();
+    });
+  </script>
 </body>
 </html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ARKHA GROUP BRANCHES</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background: #222;
-            padding: 20px;
-            text-align: center;
-            color: #fff;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .container {
-            width: 95%;
-            margin: auto;
-            padding: 20px 0;
-        }
-        .branch {
-            background: #fff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .branch h2 {
-            margin: 0;
-            font-size: 24px;
-            color: #222;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        table, th, td {
-            border: 1px solid #ccc;
-        }
-        th, td {
-            padding: 10px;
-            text-align: center;
-            font-size: 16px;
-        }
-        th {
-            background: #333;
-            color: #fff;
-        }
-        .footer {
-            text-align: center;
-            padding: 15px;
-            background: #222;
-            color: white;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-    <header>ARKHA GROUP - DAILY BUSINESS PANEL</header>
-
-    <script>
-        function calc(branch) {
-            let sale = parseFloat(document.getElementById(branch + '_sale').value) || 0;
-            let purchase = parseFloat(document.getElementById(branch + '_purchase').value) || 0;
-            let exp = parseFloat(document.getElementById(branch + '_exp').value) || 0;
-            document.getElementById(branch + '_profit').innerText = sale - purchase - exp;
-        }
-    </script>
-
-    <div class="container">
-
-        <!-- Branch 1 -->
-        <div class="branch">
-            <h2>ARKHA FUELS</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Total Sale</th>
-                    <th>Total Purchase</th>
-                    <th>Expenses</th>
-                    <th>Net Profit</th>
-                </tr>
-                <tr>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Branch 2 -->
-        <div class="branch">
-            <h2>ARKHA FARM FOODS</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Total Sale</th>
-                    <th>Total Purchase</th>
-                    <th>Expenses</th>
-                    <th>Net Profit</th>
-                </tr>
-                <tr>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Branch 3 -->
-        <div class="branch">
-            <h2>ARKHA HP GAS</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Total Sale</th>
-                    <th>Total Purchase</th>
-                    <th>Expenses</th>
-                    <th>Net Profit</th>
-                </tr>
-                <tr>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Branch 4 -->
-        <div class="branch">
-            <h2>UNIMART</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Total Sale</th>
-                    <th>Total Purchase</th>
-                    <th>Expenses</th>
-                    <th>Net Profit</th>
-                </tr>
-                <tr>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Branch 5 -->
-        <div class="branch">
-            <h2>ARKHA INFRASTRUCTURE PVT LTD</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Total Sale</th>
-                    <th>Total Purchase</th>
-                    <th>Expenses</th>
-                    <th>Net Profit</th>
-                </tr>
-                <tr>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-            </table>
-        </div>
-
-    </div>
-
-    <div class="footer">Website Developed By DIVAS DUBEY</div>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ARKHA GROUP BRANCHES</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background: #222;
-            padding: 20px;
-            text-align: center;
-            color: #fff;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .container {
-            width: 95%;
-            margin: auto;
-            padding: 20px 0;
-        }
-        .branch {
-            background: #fff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .branch h2 {
-            margin: 0;
-            font-size: 24px;
-            color: #222;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        table, th, td {
-            border: 1px solid #ccc;
-        }
-        th, td {
-            padding: 10px;
-            text-align: center;
-            font-size: 16px;
-        }
-        th {
-            background: #333;
-            color: #fff;
-        }
-        .footer {
-            text-align: center;
-            padding: 15px;
-            background: #222;
-            color: white;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-    <header>ARKHA GROUP - DAILY BUSINESS PANEL</header>
-
-    <script>
-        function calc(branch) {
-            let sale = parseFloat(document.getElementById(branch + '_sale').value) || 0;
-            let purchase = parseFloat(document.getElementById(branch + '_purchase').value) || 0;
-            let exp = parseFloat(document.getElementById(branch + '_exp').value) || 0;
-            document.getElementById(branch + '_profit').innerText = sale - purchase - exp;
-        }
-    </script>
-
-    <div class="container">
-
-        <!-- Branch 1 -->
-        <div class="branch">
-            <h2>ARKHA FUELS</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Total Sale</th>
-                    <th>Total Purchase</th>
-                    <th>Expenses</th>
-                    <th>Net Profit</th>
-                </tr>
-                <tr>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Branch 2 -->
-        <div class="branch">
-            <h2>ARKHA FARM FOODS</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Total Sale</th>
-                    <th>Total Purchase</th>
-                    <th>Expenses</th>
-                    <th>Net Profit</th>
-                </tr>
-                <tr>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Branch 3 -->
-        <div class="branch">
-            <h2>ARKHA HP GAS</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Total Sale</th>
-                    <th>Total Purchase</th>
-                    <th>Expenses</th>
-                    <th>Net Profit</th>
-                </tr>
-                <tr>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Branch 4 -->
-        <div class="branch">
-            <h2>UNIMART</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Total Sale</th>
-                    <th>Total Purchase</th>
-                    <th>Expenses</th>
-                    <th>Net Profit</th>
-                </tr>
-                <tr>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Branch 5 -->
-        <div class="branch">
-            <h2>ARKHA INFRASTRUCTURE PVT LTD</h2>
-            <table>
-                <tr>
-                    <th>Date</th>
-                    <th>Total Sale</th>
-                    <th>Total Purchase</th>
-                    <th>Expenses</th>
-                    <th>Net Profit</th>
-                </tr>
-                <tr>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                </tr>
-            </table>
-        </div>
-
-    </div>
-
-    <div class="footer">Website Developed By DIVAS DUBEY</div>
-
-</body>
-</html>
-</table>
-</div>
-
-
-<!-- Branch 5 -->
-<div class="branch">
-<h2>ARKHA INFRASTRUCTURE PVT LTD</h2>
-<table>
-<tr>
-<th>Date</th>
-<th>Total Sale</th>
-<th>Total Purchase</th>
-<th>Expenses</th>
-<th>Net Profit</th>
-</tr>
-<tr>
-<td>--</td>
-<td>--</td>
-<td>--</td>
-<td>--</td>
-<td>--</td>
-</tr>
-</table>
-</div>
-
-
-</div>
-
-
-<div class="footer">Website Developed By DIVAS DUBEY</div>
-
-
-</body>
